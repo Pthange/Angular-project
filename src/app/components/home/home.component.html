@@ -1,0 +1,115 @@
+<table class="table table-striped mt-3">
+    <thead>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-bs-toggle="tooltip" title="Add this employee">
+          Add Empolyee
+          </button>
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employeeData| paginate: { itemsPerPage:4, currentPage: page }">
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.position }}</td>
+        <td>{{ employee.department }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal9" (click)="handledEmp(employee.id)" data-bs-toggle="tooltip" title="Edit employee details">Edit</button>
+          <button class="btn btn-danger" (click)="deleteEmp(employee.id)" data-bs-toggle="tooltip" title="Delete this employee" >Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+ 
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <label for="department">Department</label>
+                  <input type="text" id="department" class="form-control" formControlName="department">
+                </div>
+              
+                <div class="form-group">
+                  <label for="position">Position</label>
+                  <input type="text" id="position" class="form-control" formControlName="position">
+                </div>
+              
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" class="form-control" formControlName="name">
+                </div>
+              
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+              </form>
+              
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- // for the eading -------->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="updateVal" (ngSubmit)="onSubmitUpadate()">
+                <div class="form-group">
+                  <label for="department">Department</label>
+                  <input type="text" id="department" class="form-control" formControlName="department">
+                </div>
+              
+                <div class="form-group">
+                  <label for="position">Position</label>
+                  <input type="text" id="position" class="form-control" formControlName="position">
+                </div>
+              
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" class="form-control" formControlName="name">
+                </div>
+              
+                <button type="submit" class="btn btn-primary" [disabled]="updateVal.invalid">Submit</button>
+              </form>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loader" *ngIf="isLoading">
+    <!-- You can use a simple spinner icon or text -->
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
